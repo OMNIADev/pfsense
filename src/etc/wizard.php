@@ -203,7 +203,7 @@ while (true) {
   }
 }
 
-file_put_contents("/tmp/custom.xml", $xml->asXML());�
+file_put_contents("/tmp/custom.xml", $xml->asXML());
 restore_backup("/tmp/custom.xml");
 
 echo "Guardando VLANs....";
@@ -365,7 +365,7 @@ if ($num_inter > 2){
   $xml = save_conf($xml, 'opt1', array($opt1_inter, $opt1_ip, $dhcpd_opt1));
 }
 
-file_put_contents("/tmp/custom.xml", $xml->asXML());�
+file_put_contents("/tmp/custom.xml", $xml->asXML());
 restore_backup("/tmp/custom.xml");
 
 system_reboot();
