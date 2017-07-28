@@ -89,7 +89,7 @@ $g = array(
 	"www_path" => "/usr/local/www",
 	"xml_rootobj" => "pfsense",
 	"admin_group" => "admins",
-	"product_name" => "pfSense",
+	"product_name" => "IWIP",
 	"product_version" => trim(file_get_contents("/etc/version"), " \n"),
 	"product_copyright" => "Rubicon Communications, LLC (Netgate)",
 	"product_copyright_url" => "https://pfsense.org/license",
@@ -146,11 +146,11 @@ if (file_exists("/etc/platform")) {
 	} else {
 		$g['default_config_backup_count'] = 30;
 	}
-} else { 
-	// shouldn't happen but "just in case" no platform were detected 
-	$g['platform'] = 'undetected'; 
-	$g['default_config_backup_count'] = 30; 
-} 
+} else {
+	// shouldn't happen but "just in case" no platform were detected
+	$g['platform'] = 'undetected';
+	$g['default_config_backup_count'] = 30;
+}
 
 
 if (file_exists("{$g['etc_path']}/default-config-flavor")) {
