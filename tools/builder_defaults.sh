@@ -372,7 +372,8 @@ export PRODUCT_SHARE_DIR=${PRODUCT_SHARE_DIR:-"/usr/local/share/${PRODUCT_NAME}"
 # package names must be valid. Using non existent
 # package name would yield an error.
 #
-#export custom_package_list=""
+
+export custom_package_list="databases/gdbm,devel/libltdl,net/openldap24-client,www/node,www/npm,lang/ruby,devel/ruby-gems,databases/redis,databases/mysql56-server,lang/python3"
 
 # General builder output filenames
 export UPDATESDIR=${UPDATESDIR:-"${IMAGES_FINAL_DIR}/updates"}
