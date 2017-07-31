@@ -604,6 +604,8 @@ EOD;
 
 	$cprules .= <<<EOD
 
+add 65529 pass ip from table(5) to table(10) out
+add 65530 pass ip from table(10) to table(5) in
 # redirect non-authenticated clients to captive portal
 add 65532 fwd 127.0.0.1,{$listenporthttp} tcp from any to any dst-port 80 in
 # let the responses from the captive portal web server back out
@@ -2276,7 +2278,7 @@ function portal_allow($clientip, $clientmac, $username, $password = null, $attri
 			$safe_username = SQLite3::escapeString($username);
 
 			/* encode password in Base64 just in case it contains commas */
-			$bpassword = (isset($config['captiveportal'][$cpzone]['reauthenticate'])) ? base64_encode($password) : '';
+			$bpassword = base64_encode($password);
 			$insertquery = "INSERT INTO captiveportal (allow_time, pipeno, ip, mac, username, sessionid, bpassword, session_timeout, idle_timeout, session_terminate_time, interim_interval, radiusctx) ";
 			$insertquery .= "VALUES ({$allow_time}, {$pipeno}, '{$clientip}', '{$clientmac}', '{$safe_username}', '{$sessionid}', '{$bpassword}', ";
 			$insertquery .= "{$session_timeout}, {$idle_timeout}, {$session_terminate_time}, {$interim_interval}, '{$radiusctx}')";

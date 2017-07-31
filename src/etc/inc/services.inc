@@ -55,8 +55,8 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-define('DYNDNS_PROVIDER_VALUES', 'all-inkl citynetwork cloudflare cloudflare-v6 custom custom-v6 dnsexit dnsimple dnsmadeeasy dnsomatic duiadns duiadns-v6 dyndns dyndns-custom dyndns-static dyns easydns eurodns freedns freedns-v6 glesys googledomains gratisdns he-net he-net-v6 he-net-tunnelbroker hover loopia namecheap noip noip-free ods opendns ovh-dynhost route53 selfhost spdyn spdyn-v6 zoneedit');
-define('DYNDNS_PROVIDER_DESCRIPTIONS', 'All-Inkl.com,City Network,CloudFlare,CloudFlare (v6),Custom,Custom (v6),DNSexit,DNSimple,DNS Made Easy,DNS-O-Matic,DuiaDns.net,DuiaDns.net (v6),DynDNS (dynamic),DynDNS (custom),DynDNS (static),DyNS,easyDNS,Euro Dns,freeDNS,freeDNS (v6),GleSYS,Google Domains,GratisDNS,HE.net,HE.net (v6),HE.net Tunnelbroker,Hover,Loopia,Namecheap,No-IP,No-IP (free),ODS.org,OpenDNS,OVH DynHOST,Route 53,SelfHost,SPDYN,SPDYN (v6),ZoneEdit');
+define('DYNDNS_PROVIDER_VALUES', 'all-inkl citynetwork cloudflare cloudflare-v6 custom custom-v6 dnsexit dnsimple dnsmadeeasy dnsomatic duiadns duiadns-v6 dyndns dyndns-custom dyndns-static dyns easydns eurodns freedns freedns-v6 glesys googledomains gratisdns he-net he-net-v6 he-net-tunnelbroker loopia namecheap noip noip-free ods opendns ovh-dynhost route53 selfhost spdyn spdyn-v6 zoneedit');
+define('DYNDNS_PROVIDER_DESCRIPTIONS', 'All-Inkl.com,City Network,CloudFlare,CloudFlare (v6),Custom,Custom (v6),DNSexit,DNSimple,DNS Made Easy,DNS-O-Matic,DuiaDns.net,DuiaDns.net (v6),DynDNS (dynamic),DynDNS (custom),DynDNS (static),DyNS,easyDNS,Euro Dns,freeDNS,freeDNS (v6),GleSYS,Google Domains,GratisDNS,HE.net,HE.net (v6),HE.net Tunnelbroker,Loopia,Namecheap,No-IP,No-IP (free),ODS.org,OpenDNS,OVH DynHOST,Route 53,SelfHost,SPDYN,SPDYN (v6),ZoneEdit');
 
 /* implement ipv6 route advertising daemon */
 function services_radvd_configure($blacklist = array()) {
@@ -445,10 +445,33 @@ function services_dhcpd_configure($family = "all", $blacklist = array()) {
 	fwrite($fd, "/bin/cp -n /usr/local/sbin/dhcpd {$g['dhcpd_chroot_path']}/usr/local/sbin/\n");
 	fwrite($fd, "/bin/chmod a+rx {$g['dhcpd_chroot_path']}/usr/local/sbin/dhcpd\n");
 
+	exec("/usr/bin/ldd /usr/local/bin/curl", $dependencies);
+	$array_path = [];
+	foreach ($dependencies as $dependency) {
+			$dependency = explode(' ', $dependency);
+			$path = isset($dependency[2]) ? $dependency[2] : null;
+			if ($path !== null && $path != "") {
+					if (!in_array(dirname($path), $array_path)){
+							fwrite($fd, "/bin/mkdir -p ".$g['dhcpd_chroot_path'].dirname($path)."\n");
+							$array_path[] = dirname($path);
+					}
+					fwrite($fd, "/bin/cp -n {$path} {$g['dhcpd_chroot_path']}{$path}\n");
+			}
+	}
+	unset($array_path);
+	unset($dependencies);
+
+	fwrite($fd, "/bin/mkdir -p {$g['dhcpd_chroot_path']}/libexec\n");
+	fwrite($fd, "/bin/cp -n /libexec/ld-elf.so.1 {$g['dhcpd_chroot_path']}/libexec/\n");
+	fwrite($fd, "/bin/mkdir -p {$g['dhcpd_chroot_path']}/usr/local/bin\n");
+	fwrite($fd, "/bin/cp -n /usr/local/bin/curl {$g['dhcpd_chroot_path']}/usr/local/bin/\n");
+	fwrite($fd, "/usr/sbin/chown -R dhcpd:_dhcp {$g['dhcpd_chroot_path']}/*\n");
+
 	$status = `/sbin/mount | /usr/bin/grep -v grep | /usr/bin/grep "{$g['dhcpd_chroot_path']}/dev"`;
 	if (!trim($status)) {
-		fwrite($fd, "/sbin/mount -t devfs devfs {$g['dhcpd_chroot_path']}/dev\n");
+			fwrite($fd, "/sbin/mount -t devfs devfs {$g['dhcpd_chroot_path']}/dev\n");
 	}
+
 	fclose($fd);
 	mwexec("/bin/sh {$g['tmp_path']}/dhcpd.sh");
 
@@ -539,6 +562,9 @@ function services_dhcpdv4_configure() {
 	} else {
 		sleep(1);
 	}
+
+	/* MAC Authentication */
+	$ifmac = $config['captiveportal']['iwip']['interface'];
 
 	$custoptions = "";
 	foreach ($dhcpdcfg as $dhcpif => $dhcpifconf) {
@@ -647,7 +673,6 @@ EOD;
 				$type = "secondary";
 				$my_port = "520";
 				$peer_port = "519";
-				$dhcpdconf_pri = '';
 			} else {
 				$my_port = "519";
 				$peer_port = "520";
@@ -1060,6 +1085,15 @@ EOD;
 			if (!empty($dhcpifconf['rootpath'])) {
 				$dhcpdconf .= "	option root-path \"{$dhcpifconf['rootpath']}\";\n";
 			}
+		}
+
+		if ($dhcpif == $ifmac) {
+			$port = isset($syscfg['webgui']['port']) && $syscfg['webgui']['port']!="" ? ":".$syscfg['webgui']['port'] : "";
+			$dhcpdconf .= "	on commit {\n";
+			$dhcpdconf .= "         	set clip = binary-to-ascii(10, 8, \".\", leased-address);\n";
+			$dhcpdconf .= "         	set clhw = binary-to-ascii(16, 8, \":\", substring(hardware, 1, 6));\n";
+			$dhcpdconf .= "         	execute(\"/usr/local/bin/curl\", \"--insecure\",concat(\"{$syscfg['webgui']['protocol']}://127.0.0.1{$port}/iwip/radius_mac_authentication.php?ip=\",clip,\"&mac=\",clhw));\n";
+			$dhcpdconf .= "	}\n";
 		}
 
 		$dhcpdconf .= <<<EOD
