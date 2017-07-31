@@ -1,3 +1,12 @@
+databases/gdbm
+devel/libltdl
+net/openldap24-client
+www/node
+www/npm
+lang/ruby
+devel/ruby-gems
+databases/redis
+databases/mysql56-server
 lang/python3
 sysutils/vm-bhyve
 sysutils/flashrom
