@@ -70,8 +70,8 @@ define('DMYPWD', "********");
 global $g;
 $g = array(
 	"event_address" => "unix:///var/run/check_reload_status",
-	"factory_shipped_username" => "admin",
-	"factory_shipped_password" => "pfsense",
+	"factory_shipped_username" => "iwip",
+	"factory_shipped_password" => "iwip",
 	"upload_path" => "/root",
 	"dhcpd_chroot_path" => "/var/dhcpd",
 	"unbound_chroot_path" => "/var/unbound",
@@ -89,7 +89,7 @@ $g = array(
 	"www_path" => "/usr/local/www",
 	"xml_rootobj" => "pfsense",
 	"admin_group" => "admins",
-	"product_name" => "IWIP",
+	"product_name" => "pfSense",
 	"product_version" => trim(file_get_contents("/etc/version"), " \n"),
 	"product_copyright" => "Rubicon Communications, LLC (Netgate)",
 	"product_copyright_url" => "https://pfsense.org/license",
@@ -115,8 +115,8 @@ $g = array(
 	"services_dhcp_server_enable" => true,
 	"wireless_regex" => "/^(ndis|wi|ath|an|ral|ural|iwi|wlan|rum|run|bwn|zyd|mwl|bwi|ipw|iwn|malo|uath|upgt|urtw|wpi)/",
 	"help_base_url" => "/help.php",
-	"pkg_prefix" => "pfSense-pkg-",
-	"default_timezone" => "Etc/UTC",
+	"pkg_prefix" => "IWIP-pkg-",
+	"default_timezone" => "Alantic/Canary",
 	"language" => "en_US"
 );
 
