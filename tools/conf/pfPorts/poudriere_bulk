@@ -51,7 +51,7 @@ sysutils/%%PRODUCT_NAME%%-pkg-Cron
 sysutils/%%PRODUCT_NAME%%-pkg-LCDproc
 security/%%PRODUCT_NAME%%-pkg-snort
 security/%%PRODUCT_NAME%%-pkg-acme
-security/%%PRODUCT_NAME%%-upgrade
+sysutils/%%PRODUCT_NAME%%-upgrade
 sysutils/%%PRODUCT_NAME%%-pkg-Shellcmd
 net/%%PRODUCT_NAME%%-pkg-routed
 net/%%PRODUCT_NAME%%-pkg-siproxd
