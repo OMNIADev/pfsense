@@ -373,7 +373,7 @@ export PRODUCT_SHARE_DIR=${PRODUCT_SHARE_DIR:-"/usr/local/share/${PRODUCT_NAME}"
 # package name would yield an error.
 #
 
-export custom_package_list="gdbm,libltdl,openldap-client,node,npm,ruby24,ruby-gems,redis,mysql56-server,python36"
+export custom_package_list="gdbm libltdl openldap-client node npm ruby23 ruby23-gems redis mysql56-server python36"
 
 # General builder output filenames
 export UPDATESDIR=${UPDATESDIR:-"${IMAGES_FINAL_DIR}/updates"}

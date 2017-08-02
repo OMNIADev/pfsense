@@ -3,10 +3,10 @@ devel/libltdl
 net/openldap24-client
 www/node
 www/npm
-lang/ruby24
+lang/ruby23
 devel/ruby-gems
 databases/redis
-databases/mysql57-server
+databases/mysql56-server
 lang/python36
 sysutils/vm-bhyve
 sysutils/flashrom
