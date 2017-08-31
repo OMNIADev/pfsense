@@ -5,6 +5,7 @@ www/node
 www/npm
 lang/ruby23
 devel/ruby-gems
+devel/rubygem-ffi
 databases/redis
 databases/mysql56-server
 databases/mysql56-client
