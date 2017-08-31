@@ -7,7 +7,8 @@ lang/ruby23
 devel/ruby-gems
 databases/redis
 databases/mysql56-server
-lang/python36
+databases/mysql56-client
+lang/python3
 sysutils/vm-bhyve
 sysutils/flashrom
 databases/php56-pgsql
