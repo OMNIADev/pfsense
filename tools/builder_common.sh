@@ -2220,7 +2220,7 @@ poudriere_rename_ports() {
 
 		# pfSense-upgrade files
 		if [ -d ${_pdir}/${_pname}/files ]; then
-			for fd in $(find ${_pdir}/${_pname}/files -type f -name '*pfSense*'); do
+			for fd in $(find ${_pdir}/${PRODUCT_NAME}-upgrade/files -type f -name '*pfSense*'); do
 				local _fddir=$(dirname ${fd})
 				local _fdname=$(echo $(basename ${fd}) | sed "s,pfSense,${PRODUCT_NAME},")
 
