@@ -84,6 +84,13 @@ product=$(/usr/local/sbin/read_global_var product_name pfSense)
 #		break
 #	fi
 #done
+isCPActived=$(/usr/local/www/iwip/services/captive_portal_status)
+
+cpMsg="Turn off Captive Portal"
+if [ $isCPActived -lt 1 ]; then
+	cpMsg="Turn on Captive Portal"
+fi
+
 
 # display a cheap menu
 echo ""
@@ -95,6 +102,7 @@ echo " 4) Ping host"
 echo " 5) Reboot system"
 echo " 6) Halt system"
 echo " 8) Shell"
+echo "11)" cpMsg
 
 echo
 read -p "Enter an option: " opmode
@@ -128,6 +136,13 @@ case ${opmode} in
 	;;
 8)
 	/bin/tcsh
+	;;
+11)
+	if [ $isCPActived -lt 1 ]; then
+		/usr/local/www/iwip/services/captiveportal_restore
+	else
+		/usr/local/www/iwip/services/captiveportal_panic
+	fi
 	;;
 
 esac
