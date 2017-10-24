@@ -652,6 +652,13 @@ function captiveportal_init_rules($reinit = false) {
 		}
 	}
 
+	/* IWIP Social Media. */
+	$cprules .= "# iwip social media\n";
+	$cprules .= captiveportal_create_ipfw_rule("add", $rulenum,
+	    "pipe tablearg ip from table({$cpzone}_sm_sites) to table({$cpzone}_allowed_sm_users) out");
+	$cprules .= captiveportal_create_ipfw_rule("add", $rulenum,
+	    "pipe tablearg ip from table({$cpzone}_allowed_sm_users) to table({$cpzone}_sm_sites) in");
+
 	$cprules .= "# redirect non-authenticated clients to captive portal\n";
 	$cprules .= captiveportal_create_ipfw_rule("add", $rulenum,
 	    "fwd 127.0.0.1,{$listenporthttp} tcp from any to any dst-port 80 in");
