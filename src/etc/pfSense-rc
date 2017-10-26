@@ -215,7 +215,7 @@ if [ "${USE_MFS_TMPVAR}" != "true" ]; then
 fi
 
 echo
-cat /usr/local/share/pfSense/ascii-art/pfsense-logo-small.txt
+cat /usr/local/share/pfSense/ascii-art/iwip-logo-small.txt
 echo
 echo
 echo "Welcome to ${product} ${version}${version_patch}..."
