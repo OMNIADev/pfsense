@@ -39,7 +39,7 @@ global $g;
 $g = array(
 	"event_address" => "unix:///var/run/check_reload_status",
 	"factory_shipped_username" => "admin",
-	"factory_shipped_password" => "pfsense",
+	"factory_shipped_password" => "iwip",
 	"upload_path" => "/root",
 	"dhcpd_chroot_path" => "/var/dhcpd",
 	"unbound_chroot_path" => "/var/unbound",
@@ -83,7 +83,7 @@ $g = array(
 	"wireless_regex" => "/^(ath|bwi|bwn|ipw|iwi|iwm|iwn|malo|mwl|ral|rsu|rum|run|uath|upgt|ural|urtw|urtwn|wi|wpi|wtap|zyd)[0-9]+/",
 	"help_base_url" => "/help.php",
 	"pkg_prefix" => "pfSense-pkg-",
-	"default_timezone" => "Etc/UTC",
+	"default_timezone" => "Atlantic/Canary",
 	"language" => "en_US",
 	"default_config_backup_count" => 30
 );
