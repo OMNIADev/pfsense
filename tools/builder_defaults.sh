@@ -313,7 +313,7 @@ export PRODUCT_SHARE_DIR=${PRODUCT_SHARE_DIR:-"/usr/local/share/${PRODUCT_NAME}"
 # package names must be valid. Using non existent
 # package name would yield an error.
 #
-export custom_package_list="iwip-js gdbm libltdl openldap-client python3 node npm ruby ruby23-gems rubygem-ffi redis mysql56-server mysql56-client"
+export custom_package_list="iwip-js IWIP-pkg-pfBlockerNG gdbm libltdl openldap-client python3 node npm ruby ruby23-gems rubygem-ffi redis mysql56-server mysql56-client"
 
 # General builder output filenames
 export ISOPATH=${ISOPATH:-"${IMAGES_FINAL_DIR}/installer/${PRODUCT_NAME}${PRODUCT_NAME_SUFFIX}-${PRODUCT_VERSION}${PRODUCT_REVISION:+-p}${PRODUCT_REVISION}-${TARGET}${TIMESTAMP_SUFFIX}.iso"}
