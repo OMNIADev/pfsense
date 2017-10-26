@@ -4,10 +4,15 @@ require_once("/usr/local/www/iwip/cpfirewall.class.php");
 
 
 class cpsocialmedia {
+<<<<<<< HEAD
 
 	const SOCIAL_MEDIA_HOSTS_TABLE = "iwip_sm_sites";
 	const SOCIAL_MEDIA_USERS_TABLE = "iwip_allowed_sm_users";
 
+=======
+	const SOCIAL_MEDIA_HOSTS_TABLE = "iwip_sm_sites";
+	const SOCIAL_MEDIA_USERS_TABLE = "iwip_allowed_sm_users";
+>>>>>>> Change the name of the tables for social media rules
 
 	const ACTION_ADD = "add";
 	const ACTION_DELETE = "delete";
