@@ -78,17 +78,24 @@ else
 	sshd_option="14) Enable Secure Shell (sshd)";
 fi
 
+
+isCPActived=$(/usr/local/www/iwip/services/captive_portal_status)
+cpMsg="Turn off Captive Portal"
+if [ $isCPActived -lt 1 ]; then
+	cpMsg="Turn on Captive Portal"
+fi
+
 # display a cheap menu
 echo ""
-echo " 0) Logout (SSH only)                  9) pfTop"
-echo " 1) Assign Interfaces                 10) Filter Logs"
-echo " 2) Set interface(s) IP address       11) Restart webConfigurator"
-echo " 3) Reset webConfigurator password    12) PHP shell + ${product} tools"
-echo " 4) Reset to factory defaults         13) Update from console"
-echo " 5) Reboot system                     ${sshd_option}"
-echo " 6) Halt system                       15) Restore recent configuration"
-echo " 7) Ping host                         16) Restart PHP-FPM"
+echo " 0) Logout (SSH only)"
+echo " 1) Assign Interfaces"
+echo " 2) Set Interface(s) IP address"
+echo " 3) IWIP Test"
+echo " 4) Ping host"
+echo " 5) Reboot system"
+echo " 6) Halt system"
 echo " 8) Shell"
+echo "11)" cpMsg
 
 echo
 read -p "Enter an option: " opmode
@@ -106,10 +113,13 @@ case ${opmode} in
 	/etc/rc.initial.setlanip
 	;;
 3)
-	/etc/rc.initial.password
+	#echo "IWIP Test"
+	iwip-cli test
+	read -p "Press a key to continue..." pause
+	clear
 	;;
 4)
-	/etc/rc.initial.defaults
+	/etc/rc.initial.ping
 	;;
 5)
 	/etc/rc.initial.reboot
@@ -117,52 +127,17 @@ case ${opmode} in
 6)
 	/etc/rc.initial.halt
 	;;
-7)
-	/etc/rc.initial.ping
-	;;
 8)
 	/bin/tcsh
 	;;
-9)
-	/usr/local/sbin/pftop
-	;;
-10)
-	/usr/local/sbin/clog -f /var/log/filter.log
-	;;
-11 | 111)
-	/etc/rc.restart_webgui
-	;;
-12)
-	/usr/local/sbin/pfSsh.php
-	;;
-13)
-	/bin/sh /usr/local/sbin/${product}-upgrade
-	;;
-14)
-	php -f /etc/rc.initial.toggle_sshd
-	;;
-15)
-	/etc/rc.restore_config_backup
-	;;
-16)
-	/etc/rc.php-fpm_restart
-	;;
-100)
-	if grep "$WORD" "$CONFIG"; then
-		links "https://localhost"
+11)
+	if [ $isCPActived -lt 1 ]; then
+		/usr/local/www/iwip/services/captiveportal_restore
 	else
-		links "http://localhost"
+		/usr/local/www/iwip/services/captiveportal_panic
 	fi
 	;;
-"")
-	ps -o command='' -c -p $PPID | grep -E '^sshd$' > /dev/null
-	if [ $? -eq 0 ]; then
-		exit
-	else
-		kill $PPID ; exit
-	fi
-	;;
+
 esac
 
 done
-
