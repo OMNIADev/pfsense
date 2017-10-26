@@ -1,0 +1,14 @@
+#!/usr/local/bin/php-cgi -f
+<?php
+
+require_once("config.inc");
+require_once("services.inc");
+require_once("captiveportal.inc");
+
+global $cpzone;
+global $cpzoneid;
+
+$cpzone = "iwip";
+$newcp = $config['captiveportal'][$cpzone];
+echo (int)isset($newcp['enable']);
+?>
