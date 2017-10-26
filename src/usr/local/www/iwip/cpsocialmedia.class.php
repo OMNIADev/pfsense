@@ -4,18 +4,18 @@ require_once("/usr/local/www/iwip/cpfirewall.class.php");
 
 
 class cpsocialmedia {
-	const SOCIAL_MEDIA_HOSTS_TABLE = 5;
-	const SOCIAL_MEDIA_USERS_TABLE = 10;
+	const SOCIAL_MEDIA_HOSTS_TABLE = "iwip_sm_sites";
+	const SOCIAL_MEDIA_USERS_TABLE = "iwip_allowed_sm_users";
 
 	const ACTION_ADD = "add";
 	const ACTION_DELETE = "delete";
 	const ACTION_FLUSH = "flush";
-	
+
 	public function __construct() {
 	}
 
 	public function addIP($zone, $ip, $mac="") {
-		return $this->actionOnSocialMediaTable(self::ACTION_ADD, $zone, $ip, $mac);	
+		return $this->actionOnSocialMediaTable(self::ACTION_ADD, $zone, $ip, $mac);
 	}
 
 	public function deleteIP($zone, $ip, $mac="") {
@@ -35,8 +35,8 @@ class cpsocialmedia {
 				}
 			}
 		}
-		
-		return true;	
+
+		return true;
 	}
 
 	private function actionOnSocialMediaTable($action, $zone, $ip, $mac="") {
