@@ -4,20 +4,24 @@
 	<lastchange/>
 	<system>
 		<optimization>normal</optimization>
-		<hostname>pfSense</hostname>
+		<hostname>IWIP</hostname>
 		<domain>localdomain</domain>
 		<dnsserver/>
 		<dnsallowoverride/>
 		<group>
 			<name>all</name>
-			<description><![CDATA[All Users]]></description>
+			<description>
+				<![CDATA[All Users]]>
+			</description>
 			<scope>system</scope>
 			<gid>1998</gid>
 			<member>0</member>
 		</group>
 		<group>
 			<name>admins</name>
-			<description><![CDATA[System Administrators]]></description>
+			<description>
+				<![CDATA[System Administrators]]>
+			</description>
 			<scope>system</scope>
 			<gid>1999</gid>
 			<member>0</member>
@@ -25,7 +29,9 @@
 		</group>
 		<user>
 			<name>admin</name>
-			<descr><![CDATA[System Administrator]]></descr>
+			<descr>
+				<![CDATA[System Administrator]]>
+			</descr>
 			<scope>system</scope>
 			<groupname>admins</groupname>
 			<bcrypt-hash>$2b$10$13u6qwCOwODv34GyCMgdWub6oQF3RX0rG7c3d3X4JvzuEmAXLYDd2</bcrypt-hash>
@@ -123,7 +129,9 @@
 		<rule>
 			<type>pass</type>
 			<ipprotocol>inet</ipprotocol>
-			<descr><![CDATA[Default allow LAN to any rule]]></descr>
+			<descr>
+				<![CDATA[Default allow LAN to any rule]]>
+			</descr>
 			<interface>lan</interface>
 			<tracker>0100000101</tracker>
 			<source>
@@ -136,7 +144,9 @@
 		<rule>
 			<type>pass</type>
 			<ipprotocol>inet6</ipprotocol>
-			<descr><![CDATA[Default allow LAN IPv6 to any rule]]></descr>
+			<descr>
+				<![CDATA[Default allow LAN IPv6 to any rule]]>
+			</descr>
 			<interface>lan</interface>
 			<tracker>0100000102</tracker>
 			<source>
@@ -233,19 +243,25 @@
 		<monitor_type>
 			<name>ICMP</name>
 			<type>icmp</type>
-			<descr><![CDATA[ICMP]]></descr>
+			<descr>
+				<![CDATA[ICMP]]>
+			</descr>
 			<options/>
 		</monitor_type>
 		<monitor_type>
 			<name>TCP</name>
 			<type>tcp</type>
-			<descr><![CDATA[Generic TCP]]></descr>
+			<descr>
+				<![CDATA[Generic TCP]]>
+			</descr>
 			<options/>
 		</monitor_type>
 		<monitor_type>
 			<name>HTTP</name>
 			<type>http</type>
-			<descr><![CDATA[Generic HTTP]]></descr>
+			<descr>
+				<![CDATA[Generic HTTP]]>
+			</descr>
 			<options>
 				<path>/</path>
 				<host/>
@@ -255,7 +271,9 @@
 		<monitor_type>
 			<name>HTTPS</name>
 			<type>https</type>
-			<descr><![CDATA[Generic HTTPS]]></descr>
+			<descr>
+				<![CDATA[Generic HTTPS]]>
+			</descr>
 			<options>
 				<path>/</path>
 				<host/>
@@ -265,7 +283,9 @@
 		<monitor_type>
 			<name>SMTP</name>
 			<type>send</type>
-			<descr><![CDATA[Generic SMTP]]></descr>
+			<descr>
+				<![CDATA[Generic SMTP]]>
+			</descr>
 			<options>
 				<send/>
 				<expect>220 *</expect>
